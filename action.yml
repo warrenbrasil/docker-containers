@@ -1,0 +1,21 @@
+name: "Warren - Docker Containers"
+description: "Start docker-compose for integration tests"
+branding:
+  icon: "layers"
+  color: "red"
+inputs:
+  docker-compose-file:
+    description: "The docker-compose file path (absolute, relative or pattern paths are acceptable)"
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: "Start Docker Dependencies"
+      shell: bash
+      env:
+        DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
+      run: docker-compose -f $DOCKER_COMPOSE_FILE up -d
+
+    - name: "Wait for Dependencies to Start"
+      shell: bash
+      run: sleep 10s
