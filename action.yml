@@ -10,6 +10,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: "Stop Docker Dependencies"
+      shell: bash
+      env:
+        DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
+      run: docker-compose -f $DOCKER_COMPOSE_FILE down
+
     - name: "Start Docker Dependencies"
       shell: bash
       env:
