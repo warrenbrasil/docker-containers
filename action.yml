@@ -24,7 +24,7 @@ runs:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
       run: docker-compose -f $DOCKER_COMPOSE_FILE down
 
-    - name: "Wait for Dependencies to Stop"
+    - name: "Wait for Dependencies to Start"
       shell: bash
       run: sleep 5s
 
