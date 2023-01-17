@@ -12,7 +12,7 @@ This action takes a `docker-compose` file and start all services declared in det
 
 ```yml
 - name: Warren - Docker Containers
-  uses: warrenbrasil/docker-containers@v1
+  uses: warrenbrasil/docker-containers@v3
   with:
     docker-compose-file: ./docker-compose.yml
 ```
