@@ -12,11 +12,11 @@ runs:
   steps:
     - name: "Stop all containers"
       shell: bash
-      run: docker stop $(docker ps -a -q)
+      run: docker stop $(docker ps -a -q) || true
 
     - name: "Remove all containers"
       shell: bash
-      run: docker rm $(docker ps -a -q)
+      run: docker rm $(docker ps -a -q) || true
 
     - name: "Stop Docker Dependencies"
       shell: bash
