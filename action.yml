@@ -10,11 +10,23 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: "Stop all containers"
+      shell: bash
+      run: docker stop $(docker ps -a -q)
+
+    - name: "Remove all containers"
+      shell: bash
+      run: docker rm $(docker ps -a -q)
+
     - name: "Stop Docker Dependencies"
       shell: bash
       env:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
       run: docker-compose -f $DOCKER_COMPOSE_FILE down
+
+    - name: "Wait for Dependencies to Stop"
+      shell: bash
+      run: sleep 5s
 
     - name: "Start Docker Dependencies"
       shell: bash
