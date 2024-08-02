@@ -22,7 +22,7 @@ runs:
       shell: bash
       env:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
-      run: docker-compose -f $DOCKER_COMPOSE_FILE down
+      run: docker compose -f $DOCKER_COMPOSE_FILE down
 
     - name: "Wait for Dependencies to Start"
       shell: bash
@@ -32,7 +32,7 @@ runs:
       shell: bash
       env:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
-      run: docker-compose -f $DOCKER_COMPOSE_FILE up -d
+      run: docker compose -f $DOCKER_COMPOSE_FILE up -d
 
     - name: "Wait for Dependencies to Start"
       shell: bash
