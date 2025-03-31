@@ -12,11 +12,23 @@ runs:
   steps:
     - name: "Stop all containers"
       shell: bash
-      run: docker stop $(docker ps -a -q) || true
-
+      run: |
+        containers=$(docker ps -aq)
+        if [ -n "$containers" ]; then
+          docker stop $containers || true
+        else
+          echo "No containers to stop."
+        fi
+    
     - name: "Remove all containers"
       shell: bash
-      run: docker rm $(docker ps -a -q) || true
+      run: |
+        containers=$(docker ps -aq)
+        if [ -n "$containers" ]; then
+          docker rm $containers || true
+        else
+          echo "No containers to remove."
+        fi
 
     - name: "Stop Docker Dependencies"
       shell: bash
