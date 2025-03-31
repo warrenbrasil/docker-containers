@@ -19,7 +19,7 @@ runs:
         else
           echo "No containers to stop."
         fi
-    
+
     - name: "Remove all containers"
       shell: bash
       run: |
@@ -34,18 +34,24 @@ runs:
       shell: bash
       env:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
-      run: docker compose -f $DOCKER_COMPOSE_FILE down
-
-    - name: "Wait for Dependencies to Start"
-      shell: bash
-      run: sleep 5s
+      run: |
+        if command -v docker-compose &> /dev/null; then
+          docker-compose -f "$DOCKER_COMPOSE_FILE" down || true
+        else
+          docker compose -f "$DOCKER_COMPOSE_FILE" down || true
+        fi
 
     - name: "Start Docker Dependencies"
       shell: bash
       env:
         DOCKER_COMPOSE_FILE: ${{ inputs.docker-compose-file }}
-      run: docker compose -f $DOCKER_COMPOSE_FILE up -d
+      run: |
+        if command -v docker-compose &> /dev/null; then
+          docker-compose -f "$DOCKER_COMPOSE_FILE" up -d
+        else
+          docker compose -f "$DOCKER_COMPOSE_FILE" up -d
+        fi
 
-    - name: "Wait for Dependencies to Start"
+    - name: "Wait for Docker Dependencies"
       shell: bash
       run: sleep 10s
